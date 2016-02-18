@@ -11,4 +11,10 @@ class SCL9533Injector extends SyntheticMembersInjector {
   override def needsCompanionObject(source: ScTypeDefinition): Boolean = {
     source.findAnnotation("something.enhance") != null
   }
+
+  override def injectFunctions(source: ScTypeDefinition): Seq[String] = {
+    if (source.findAnnotation("something.enhance") != null && source.isObject) {
+      Seq("def apply(): Int = 1")
+    } else Seq.empty
+  }
 }
